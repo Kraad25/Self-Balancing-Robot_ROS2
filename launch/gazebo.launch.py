@@ -12,6 +12,7 @@ def generate_launch_description():
 
     pkg_path = get_package_share_directory("sbr_pjt")
     urdf_file = os.path.join(pkg_path, 'urdf', 'sbr.urdf')
+    world_file = os.path.join(pkg_path, 'worlds', 'custom.world')
 
     robot_description = Command(['xacro ', urdf_file])
     doc = xacro.parse(open(urdf_file))
@@ -31,7 +32,8 @@ def generate_launch_description():
     # Launch Gazebo
     gazebo = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(
-        [os.path.join(get_package_share_directory('gazebo_ros'), 'launch'), '/gazebo.launch.py'])
+        [os.path.join(get_package_share_directory('gazebo_ros'), 'launch'), '/gazebo.launch.py']),
+        launch_arguments={'world': world_file}.items()
     )
 
     # Spawn Entity
@@ -39,7 +41,7 @@ def generate_launch_description():
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
-        arguments=['-topic', '/robot_description', '-entity', 'robot'],
+        arguments=['-topic', '/robot_description', '-entity', 'robot', '-x', '0', '-y', '0', '-z', '0.1'],  # Adjust the z value
         output='screen'
     )
 
