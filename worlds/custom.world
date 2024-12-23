@@ -11,7 +11,7 @@
     </gui>
     <scene>
       <shadows>0</shadows>
-      <grid>false</grid>
+      <grid>true</grid>
       <origin_visual>false</origin_visual>
     </scene>
     <light name="sun" type="directional">

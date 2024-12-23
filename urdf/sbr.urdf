@@ -2,7 +2,8 @@
 
 <robot name="SBR">
 
-    <!-- Links -->
+    <!-- *******************************   LINKS   *************************************** -->
+    <!-- Base Link -->
     <link name="base_link">
         <inertial>
             <mass value="1.0"/>
@@ -27,6 +28,7 @@
         </collision>
     </link>
 
+    <!-- Left Wheel -->
     <link name="left_wheel">
         <inertial>
             <mass value="1.0"/>
@@ -51,6 +53,7 @@
         </collision>
     </link>
 
+    <!-- Right Wheel -->
     <link name="right_wheel">
         <inertial>
             <mass value="1.0"/>
@@ -75,28 +78,88 @@
         </collision>
     </link>
 
+    <!-- Footprint -->
     <link name="base_footprint"/>
 
 
-    <!-- Joints -->
+    <!-- *******************************   JOINTS   ********************************** -->
+    <!-- Base to Footprint Joint  -->
+    <!-- Not that important, if removing this then remove the footprint link as well-->
     <joint name="base_joint" type="fixed">
         <parent link="base_link"/>
         <child link="base_footprint"/>
         <origin xyz="0 0 -0.350" rpy="0 0 0"/>
     </joint>
 
+    <!-- Left Wheel to the Base -->
     <joint name="base_left_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="left_wheel"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="0 1 0"/>
+        <dynamics damping="0.2"/>
     </joint>
 
+    <!-- Right Wheel to the Base -->
     <joint name="base_right_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="right_wheel"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="0 1 0"/>
+        <dynamics damping="0.2"/>
     </joint>
+
+    <!-- ****************************   IMU Sensor   **************************** -->
+
+    <!-- IMU Link -->
+    <link name="imu_link">
+        <inertial>
+            <mass value = "0.001"/>
+            <origin value = "0 0 0"/>
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+        </inertial>
+
+        <visual>
+            <geometry>
+                <sphere radius="0.02"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </visual>
+
+        <collision>
+            <geometry>
+                <sphere radius="0.02"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </collision>
+    </link>
+
+    <!-- IMU Joint -->
+    <joint name="imu_base_link_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="imu_link"/>
+        <origin xyz="0.01 0 0.41" rpy="0 0 0"/>
+    </joint>
+
+    <!-- IMU Ouput Definition -->
+    <gazebo reference="imu_link">
+        <gravity>true</gravity>
+        <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <visualize>true</visualize>
+        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu">
+            <bodyName>imu_link</bodyName>
+            <updateRateHZ>10.0</updateRateHZ>
+            <gaussianNoise>0.05</gaussianNoise>
+            <xyzOffset>0 0 0</xyzOffset>
+            <rpyOffset>0 0 0</rpyOffset>
+            <frameName>imu_link</frameName>
+            <initialOrientationAsReference>false</initialOrientationAsReference>
+        </plugin>
+        <pose>0 0 0 0 0 0</pose>
+        </sensor>
+    </gazebo>
+
 
 </robot>
