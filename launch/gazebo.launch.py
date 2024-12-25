@@ -45,9 +45,30 @@ def generate_launch_description():
         output='screen'
     )
 
+    # IMU Values 
+    imu = Node(
+        package='sbr_pjt',
+        executable='imu_reader.py',      # Name of the new node script or executable
+        output='screen')            # Output to screen, can be 'log' as well
+
+    # LQR Values 
+    lqr = Node(
+        package='sbr_pjt',
+        executable='lqr.py',      # Name of the new node script or executable
+        output='screen')            # Output to screen, can be 'log' as well
+    
+    # LQR Values 
+    dDrive = Node(
+        package='sbr_pjt',
+        executable='diff_drive.py',      # Name of the new node script or executable
+        output='screen')            # Output to screen, can be 'log' as well
+    
     return LaunchDescription([
         DeclareLaunchArgument(name='headless', default_value='true', description='Set to "false" to run headless.'),
         gazebo,
         robot_state_publisher,
         spawn_entity,
+        imu,
+        lqr,
+        dDrive,
     ])

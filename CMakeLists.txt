@@ -24,5 +24,7 @@ endif()
 install(DIRECTORY launch meshes worlds urdf
 DESTINATION share/${PROJECT_NAME})
 
+install(PROGRAMS src/imu_reader.py src/lqr.py src/diff_drive.py
+DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
