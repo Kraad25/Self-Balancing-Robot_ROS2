@@ -18,24 +18,15 @@ class DifferentialDrive(Node):
         self.wheel_radius = 0.35  # Radius of wheels
 
     def motor_callback(self, msg):
-        linear_x = msg.linear.x
-        angular_z = msg.angular.z
+        left_wheel = msg.linear.x
+        right_wheel = msg.linear.y
 
-        # Calculate left and right wheel speeds
-        left_wheel, right_wheel = self.compute_wheel_speeds(linear_x, angular_z)
-
-        # Publish to cmd_vel to move robot
+        # Publish adjusted wheel velocities
         cmd_msg = Twist()
         cmd_msg.linear.x = (left_wheel + right_wheel) * self.wheel_radius / 2
         cmd_msg.angular.z = (right_wheel - left_wheel) * self.wheel_radius / self.wheel_base
-        
         self.cmd_pub.publish(cmd_msg)
-        self.get_logger().info(f"Left: {left_wheel:.2f}, Right: {right_wheel:.2f}")
 
-    def compute_wheel_speeds(self, linear_x, angular_z):
-        left_wheel = (linear_x - angular_z * self.wheel_base / 2) / self.wheel_radius
-        right_wheel = (linear_x + angular_z * self.wheel_base / 2) / self.wheel_radius
-        return left_wheel, right_wheel
 
 
 if __name__ == '__main__':
