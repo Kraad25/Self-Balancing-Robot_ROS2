@@ -10,7 +10,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
 
-    pkg_path = get_package_share_directory("sbr_pjt")
+    pkg_path = get_package_share_directory("sbr_pjt")   # Enter your package name here
     urdf_file = os.path.join(pkg_path, 'urdf', 'sbr.urdf')
     world_file = os.path.join(pkg_path, 'worlds', 'custom.world')
 
@@ -45,23 +45,23 @@ def generate_launch_description():
         output='screen'
     )
 
-    # IMU Values 
+    # IMU Node
     imu = Node(
         package='sbr_pjt',
-        executable='imu_reader.py',      # Name of the new node script or executable
-        output='screen')            # Output to screen, can be 'log' as well
+        executable='imuReader.py',
+        output='screen')          
 
-    # LQR Values 
+    # LQR Node 
     lqr = Node(
         package='sbr_pjt',
-        executable='lqr.py',      # Name of the new node script or executable
-        output='screen')            # Output to screen, can be 'log' as well
+        executable='lqr.py',      
+        output='screen')          
     
-    # LQR Values 
-    dDrive = Node(
+    # Differential Drive Node 
+    differentialDrive = Node(
         package='sbr_pjt',
-        executable='diff_drive.py',      # Name of the new node script or executable
-        output='screen')            # Output to screen, can be 'log' as well
+        executable='differentialDrive.py',
+        output='screen')            
     
     return LaunchDescription([
         DeclareLaunchArgument(name='headless', default_value='true', description='Set to "false" to run headless.'),
@@ -70,5 +70,5 @@ def generate_launch_description():
         spawn_entity,
         imu,
         lqr,
-        dDrive,
+        differentialDrive,
     ])

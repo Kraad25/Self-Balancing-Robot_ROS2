@@ -27,10 +27,7 @@ class LQR(Node):
         self.K, self.S, self.e = lqr(A, B, self.Q, self.R)
         
 
-    def lqrCallback(self, data: Imu):
-        # Recalculate LQR controller with potential updated Q and R if needed
-        self.K, self.S, self.e = lqr(A, B, self.Q, self.R)
-    
+    def lqrCallback(self, data: Imu): 
         # Read tilt and angular velocity directly from IMU message
         tilt_angle = data.orientation.y * 180 / 3.1416  # Convert pitch (tilt) to degrees
         tilt_rate = data.angular_velocity.y 

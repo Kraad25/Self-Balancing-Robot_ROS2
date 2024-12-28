@@ -6,7 +6,7 @@
     </include>
     <gui>
       <camera name="gzclient_camera">
-        <pose>6.0928 -3.4662 3.5822 0 0.4236 2.5642</pose>
+        <pose>3.8744 -6.5353 2.6842 0 0.2396 2.0882</pose>
       </camera>
     </gui>
     <scene>
