@@ -19,7 +19,7 @@
             <origin xyz="0 0 0.4" rpy="0 0 0"/>
         </visual>
 
-        <collision>
+        <collision name = "base_collision">
             <geometry>
                 <mesh filename="file:///$(find sbr_pjt)/meshes/base_link.STL"/>
             </geometry>
@@ -80,7 +80,6 @@
 
     <!-- Footprint -->
     <link name="base_footprint"/>
-
 
     <!-- *******************************   JOINTS   ********************************** -->
     <!-- Base to Footprint Joint  -->
@@ -162,7 +161,6 @@
         <pose>0 0 0 0 0 0</pose>
         </sensor>
     </gazebo>
-
 
     <!-- ***************************   Differential Drive   ***************************** -->
     <gazebo>
