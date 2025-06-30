@@ -33,7 +33,7 @@ def generate_launch_description():
     gazebo = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(
         [os.path.join(get_package_share_directory('gazebo_ros'), 'launch'), '/gazebo.launch.py']),
-        launch_arguments={'world': world_file, 'gui': 'false'}.items()
+        launch_arguments={'world': world_file, 'gui': 'true'}.items() # Change gui to false when training
     )
 
     # Spawn Entity
@@ -41,7 +41,7 @@ def generate_launch_description():
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
-        arguments=['-topic', '/robot_description', '-entity', 'robot', '-x', '0', '-y', '0', '-z', '0'],  # Adjust the z value
+        arguments=['-topic', '/robot_description', '-entity', 'SBR', '-x', '0', '-y', '0', '-z', '0'],  # Adjust the z value
         output='screen'
     )
 
@@ -61,13 +61,7 @@ def generate_launch_description():
     differentialDrive = Node(
         package='sbr_pjt',
         executable='differentialDrive.py',
-        output='screen')
-
-    # Contact Flag Node
-    contact = Node(
-        package='sbr_pjt',
-        executable='contactNode.py',
-        output='screen')            
+        output='screen')           
     
     return LaunchDescription([
         DeclareLaunchArgument(name='headless', default_value='true', description='Set to "false" to run headless.'),
@@ -75,7 +69,6 @@ def generate_launch_description():
         robot_state_publisher,
         spawn_entity,
         imu,
-        contact,
-        #slqr,
-        #differentialDrive,
+        #lqr,
+        differentialDrive,
     ])

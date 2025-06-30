@@ -6,8 +6,6 @@ from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Twist
 import numpy as np
 from control import lqr
-from std_msgs.msg import Float32, String
-
 
 # System and control matrices
 A = np.array([[0, 1], [5, 0]])
@@ -26,7 +24,6 @@ class LQR(Node):
         self.R = 2.0
         self.K, self.S, self.e = lqr(A, B, self.Q, self.R)
         
-
     def lqrCallback(self, data: Imu): 
         # Read tilt and angular velocity directly from IMU message
         tilt_angle = data.orientation.y * 180 / 3.1416  # Convert pitch (tilt) to degrees
@@ -47,7 +44,6 @@ class LQR(Node):
         motor_vel.linear.y = -float(feedback)   # Right wheel speed
 
         self.lqr_output.publish(motor_vel)
-
 
 if __name__ == '__main__':
     rclpy.init()

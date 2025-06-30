@@ -37,7 +37,7 @@ endif()
 install(DIRECTORY launch meshes worlds urdf
 DESTINATION share/${PROJECT_NAME})
 
-install(PROGRAMS src/imuReader.py src/lqr.py src/differentialDrive.py src/contactNode.py
+install(PROGRAMS src/nodes/imuReader.py src/nodes/lqr.py src/nodes/differentialDrive.py
 DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

@@ -9,6 +9,13 @@
       <ros>
         <namespace>/</namespace>
       </ros>
+      <update_rate>100.0</update_rate>
+    </plugin>
+
+    <plugin name="set_entity_state_plugin" filename="libgazebo_ros_state.so">
+      <ros>
+        <namespace>/</namespace>
+      </ros>
     </plugin>
 
     <gui>
@@ -41,6 +48,9 @@
 
     <physics type="ode">
       <gravity>0 0 -9.8</gravity>
+      <max_step_size>0.005</max_step_size>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <real_time_factor>0</real_time_factor>
     </physics>
   </world>
 </sdf>

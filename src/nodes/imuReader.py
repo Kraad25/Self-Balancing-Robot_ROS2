@@ -12,7 +12,7 @@ class IMUReader(Node):
         self.get_logger().info("IMU values are being recorded")
 
         self.subscription = self.create_subscription(Imu, '/imu/out', self.imu_callback, 10)
-        self.publisher = self.create_publisher(Imu, '/lqr_input', 10)
+        self.publisher = self.create_publisher(Imu, '/rl_input', 10)
 
     def imu_callback(self, msg):
         imuValues = Imu()
@@ -32,9 +32,6 @@ class IMUReader(Node):
         
         self.publisher.publish(imuValues)
         
-
-
-
 if __name__ == '__main__':
     rclpy.init()
     imu_subscriber = IMUReader()
